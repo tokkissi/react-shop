@@ -1,10 +1,32 @@
 import "./App.css";
 import "./tailwind.css";
-import React from "react";
-import { Container, Nav, Navbar, Row, Col } from "react-bootstrap";
-import heroImg from "./img/ikm-water.png";
+import React, { useState } from "react";
+import { Container, Nav, Navbar, Row } from "react-bootstrap";
+import heroImg from "./img/ikm-water.jpg";
+import shoesData from "./data";
+import ProductBox from "./components/ProductBox";
 
 function App() {
+  const [shoes] = useState(shoesData);
+  console.log(shoes);
+
+  const ProductList = () => {
+    const addProduct = () => {
+      return shoesData.map((shoe, index) => {
+        <>
+          <ProductBox shoes={shoesData} i={index}></ProductBox>;
+        </>;
+      });
+    };
+    return (
+      <>
+        <Container>
+          <Row>{addProduct()}</Row>
+        </Container>
+      </>
+    );
+  };
+
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
@@ -23,38 +45,7 @@ function App() {
         style={{ backgroundImage: `url(${heroImg})` }}
       ></div>
 
-      <Container>
-        <Row>
-          <Col sm>
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              alt=""
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col sm>
-            <img
-              src="https://codingapple1.github.io/shop/shoes2.jpg"
-              alt=""
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-
-          <Col sm>
-            <img
-              src="https://codingapple1.github.io/shop/shoes3.jpg"
-              alt=""
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container>
+      <ProductList></ProductList>
     </div>
   );
 }
