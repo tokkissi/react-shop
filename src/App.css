@@ -1,3 +1,10 @@
+.main-bg {
+  height: 600px;
+  /* background-image: url(./img/ikm-water.png); */
+  background-size: cover;
+  background-position: center;
+}
+
 .App {
   text-align: center;
 }
