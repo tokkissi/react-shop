@@ -2,9 +2,10 @@ import "./App.css";
 import "./tailwind.css";
 import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import heroImg from "./img/ikm-water.jpg";
 import shoesData from "./data";
-import ProductBox from "./components/ProductBox";
+import { Link, Route, Routes } from "react-router-dom";
+import ProductList from "./components/ProductList";
+import Detail from "./pages/Detail";
 
 function App() {
   const [shoes] = useState(shoesData);
@@ -18,21 +19,16 @@ function App() {
             <Nav.Link href="#home">로그인</Nav.Link>
             <Nav.Link href="#features">장바구니</Nav.Link>
             <Nav.Link href="#pricing">마이페이지</Nav.Link>
+            <Link to="/">홈</Link>
+            <Link to="/detail">상세페이지</Link>
           </Nav>
         </Container>
       </Navbar>
 
-      <div
-        className="main-bg"
-        style={{ backgroundImage: `url(${heroImg})` }}
-      ></div>
-      <div className="container">
-        <div className="row">
-          {shoes.map((a, i) => {
-            return <ProductBox shoes={shoes[i]} i={i} key={shoes[i].id} />;
-          })}
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<ProductList shoes={shoes} />} />
+        <Route path="/detail" element={<Detail />} />
+      </Routes>
     </div>
   );
 }
