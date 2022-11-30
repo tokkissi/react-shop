@@ -1,31 +1,13 @@
 import "./App.css";
 import "./tailwind.css";
 import React, { useState } from "react";
-import { Container, Nav, Navbar, Row } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import heroImg from "./img/ikm-water.jpg";
 import shoesData from "./data";
 import ProductBox from "./components/ProductBox";
 
 function App() {
   const [shoes] = useState(shoesData);
-  console.log(shoes);
-
-  const ProductList = () => {
-    const addProduct = () => {
-      return shoesData.map((shoe, index) => {
-        <>
-          <ProductBox shoes={shoesData} i={index}></ProductBox>;
-        </>;
-      });
-    };
-    return (
-      <>
-        <Container>
-          <Row>{addProduct()}</Row>
-        </Container>
-      </>
-    );
-  };
 
   return (
     <div className="App">
@@ -44,8 +26,13 @@ function App() {
         className="main-bg"
         style={{ backgroundImage: `url(${heroImg})` }}
       ></div>
-
-      <ProductList></ProductList>
+      <div className="container">
+        <div className="row">
+          {shoes.map((a, i) => {
+            return <ProductBox shoes={shoes[i]} i={i} key={shoes[i].id} />;
+          })}
+        </div>
+      </div>
     </div>
   );
 }
