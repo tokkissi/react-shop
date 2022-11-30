@@ -1,6 +1,6 @@
 import React from "react";
 
-const Detail = () => {
+const DetailPage = () => {
   return (
     <div className="container">
       <div className="row">
@@ -20,4 +20,4 @@ const Detail = () => {
     </div>
   );
 };
-export default Detail;
+export default DetailPage;

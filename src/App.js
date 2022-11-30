@@ -3,31 +3,35 @@ import "./tailwind.css";
 import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import shoesData from "./data";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/ProductList";
-import Detail from "./pages/Detail";
+import DetailPage from "./pages/DetailPage";
+import EventPage from "./pages/EventPage";
 
 function App() {
   const [shoes] = useState(shoesData);
+  let navigate = useNavigate();
 
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand href="#home">토끼상점</Navbar.Brand>
+          <Navbar.Brand onClick={() => navigate("/")}>토끼상점</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">로그인</Nav.Link>
-            <Nav.Link href="#features">장바구니</Nav.Link>
+            <Nav.Link onClick={() => navigate("/detail")}>Detail</Nav.Link>
             <Nav.Link href="#pricing">마이페이지</Nav.Link>
-            <Link to="/">홈</Link>
-            <Link to="/detail">상세페이지</Link>
           </Nav>
         </Container>
       </Navbar>
 
       <Routes>
         <Route path="/" element={<ProductList shoes={shoes} />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail" element={<DetailPage />} />
+        <Route path="/event" element={<EventPage />}>
+          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
+          <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
+        </Route>
+        <Route path="*" element={<div>페이지를 찾지 못했습니다</div>} />
       </Routes>
     </div>
   );
