@@ -7,6 +7,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/ProductList";
 import DetailPage from "./pages/DetailPage";
 import EventPage from "./pages/EventPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const [shoes] = useState(shoesData);
@@ -26,12 +27,12 @@ function App() {
 
       <Routes>
         <Route path="/" element={<ProductList shoes={shoes} />} />
-        <Route path="/detail" element={<DetailPage />} />
+        <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
         <Route path="/event" element={<EventPage />}>
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
           <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
         </Route>
-        <Route path="*" element={<div>페이지를 찾지 못했습니다</div>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
