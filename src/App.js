@@ -11,7 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/CartPage";
 
 function App() {
-  const [shoes] = useState(shoesData);
+  const [shoes, setShoes] = useState(shoesData);
   let navigate = useNavigate();
 
   return (
@@ -27,7 +27,10 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={<ProductList shoes={shoes} />} />
+        <Route
+          path="/"
+          element={<ProductList shoes={shoes} setShoes={setShoes} />}
+        />
         <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
         <Route path="/event" element={<EventPage />}>
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
