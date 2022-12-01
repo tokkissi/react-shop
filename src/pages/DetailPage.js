@@ -1,19 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 
 const DetailPage = ({ shoes }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [count, setCount] = useState(0);
+  const [countDown, setCountDown] = useState(true);
+  const [nums, setNums] = useState("");
   const shoe = shoes.find((el) => el.id === parseInt(id));
+
   useEffect(() => {
+    () => clearTimeout(timer);
     if (shoe === undefined) {
       navigate("/error");
+      return;
     }
-  }, []);
+    const timer = setTimeout(() => {
+      setCountDown(false);
+    }, 2000);
+
+    if (isNaN(nums)) {
+      setNums("");
+      alert("숫자만 입력하세요");
+    }
+  }, [nums]);
 
   return shoe === undefined ? null : (
     <div className="container">
+      {countDown ? (
+        <div className="alert alert-warning">2초 이내 누르면 할인됩니다!</div>
+      ) : null}
+
+      {count}
+      <button onClick={() => setCount((count) => count + 1)}>버튼</button>
       <div className="row">
         <div className="col-md-6">
           <img
@@ -24,6 +44,12 @@ const DetailPage = ({ shoes }) => {
           />
         </div>
         <div className="col-md-6">
+          <input
+            type="text"
+            onChange={(e) => setNums(e.target.value)}
+            style={{ border: "5px solid red" }}
+            value={nums}
+          />
           <h4 className="pt-5">{shoe.title}</h4>
           <p>{shoe.content}</p>
           <p>{shoe.price}</p>

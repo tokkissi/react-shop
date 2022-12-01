@@ -8,6 +8,7 @@ import ProductList from "./components/ProductList";
 import DetailPage from "./pages/DetailPage";
 import EventPage from "./pages/EventPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   const [shoes] = useState(shoesData);
@@ -32,6 +33,7 @@ function App() {
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
           <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
         </Route>
+        <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
