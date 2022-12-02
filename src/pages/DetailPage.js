@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
+import DetailTabs from "../components/DetailTabs";
 
 const DetailPage = ({ shoes }) => {
   const { id } = useParams();
@@ -56,6 +57,7 @@ const DetailPage = ({ shoes }) => {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      <DetailTabs />
     </div>
   );
 };
