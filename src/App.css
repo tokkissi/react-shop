@@ -5,6 +5,31 @@
   background-position: center;
 }
 
+.start {
+  font-size: 50px;
+  color: blue;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.end {
+  opacity: 1;
+  color: red;
+  transform: scale(1);
+  transition: all 1.5s;
+}
+
+.vi-start {
+  opacity: 0;
+  background-color: aquamarine;
+}
+
+.vi-end {
+  opacity: 1;
+  background-color: white;
+  transition: all 3s;
+}
+
 .App {
   text-align: center;
 }

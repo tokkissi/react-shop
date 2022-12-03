@@ -9,7 +9,12 @@ const DetailPage = ({ shoes }) => {
   const [count, setCount] = useState(0);
   const [countDown, setCountDown] = useState(true);
   const [nums, setNums] = useState("");
+  const [viClass, setViClass] = useState("");
   const shoe = shoes.find((el) => el.id === parseInt(id));
+
+  useEffect(() => {
+    setViClass("vi-end");
+  }, []);
 
   useEffect(() => {
     () => clearTimeout(timer);
@@ -28,7 +33,7 @@ const DetailPage = ({ shoes }) => {
   }, [nums]);
 
   return shoe === undefined ? null : (
-    <div className="container">
+    <div className={`container vi-start ${viClass}`}>
       {countDown ? (
         <div className="alert alert-warning">2초 이내 누르면 할인됩니다!</div>
       ) : null}
@@ -57,7 +62,7 @@ const DetailPage = ({ shoes }) => {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
-      <DetailTabs />
+      <DetailTabs shoes={shoes} />
     </div>
   );
 };

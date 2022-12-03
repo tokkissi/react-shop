@@ -20,8 +20,9 @@ function App() {
         <Container>
           <Navbar.Brand onClick={() => navigate("/")}>토끼상점</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate("/detail")}>Detail</Nav.Link>
-            <Nav.Link href="#pricing">마이페이지</Nav.Link>
+            {/* <Nav.Link onClick={() => navigate("/detail")}>Detail</Nav.Link> */}
+            <Nav.Link onClick={() => navigate("/cart")}>장바구니</Nav.Link>
+            <Nav.Link>마이페이지</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

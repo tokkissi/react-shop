@@ -1,12 +1,14 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const ProductBox = ({ shoes, i }) => {
+const ProductBox = ({ shoes, id }) => {
+  const navigate = useNavigate();
   return (
-    <Col sm>
+    <Col sm onClick={() => navigate(`/detail/${id}`)}>
       <img
-        src={`https://codingapple1.github.io/shop/shoes${i + 1}.jpg`}
+        src={`https://codingapple1.github.io/shop/shoes${id + 1}.jpg`}
         alt=""
         width="80%"
       />
@@ -21,7 +23,7 @@ ProductBox.propTypes = {
     title: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
-  i: PropTypes.node,
+  id: PropTypes.number,
 };
 
 export default ProductBox;

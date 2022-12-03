@@ -1,12 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import heroImg from "../img/ikm-water.jpg";
 import ProductBox from "./ProductBox";
 import axios from "axios";
+import shoeData from "../data";
 
 const ProductList = ({ shoes, setShoes }) => {
   let callCnt = useRef(0);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setShoes(shoeData);
+  }, []);
   return (
     <div>
       <div
@@ -15,16 +20,23 @@ const ProductList = ({ shoes, setShoes }) => {
       ></div>
       <div className="container">
         <div className="row">
-          {shoes.map((a, i) => {
-            return <ProductBox shoes={shoes[i]} i={i} key={shoes[i].id} />;
-          })}
+          {callCnt === 0
+            ? null
+            : shoes.map((a, i) => {
+                return (
+                  <ProductBox
+                    shoes={shoes[i]}
+                    id={shoes[i].id}
+                    key={shoes[i].id}
+                  />
+                );
+              })}
         </div>
       </div>
       {callCnt.current < 2 ? (
         <button
           onClick={() => {
             setLoading(true);
-            console.log(loading);
             if (callCnt.current < 2) {
               axios
                 .get(
@@ -37,7 +49,6 @@ const ProductList = ({ shoes, setShoes }) => {
                   const fetched = res.data;
                   const newShoes = shoes.concat(fetched);
                   setShoes(newShoes);
-                  console.log("axios 완료");
                   setLoading(false);
                 })
                 .catch((err) => {
@@ -45,8 +56,6 @@ const ProductList = ({ shoes, setShoes }) => {
                   setLoading(false);
                 });
             }
-            console.log("프로미스 완료, 로딩 false");
-            console.log("프로미스 완료");
           }}
         >
           버튼
