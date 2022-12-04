@@ -2,13 +2,14 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { plusAge } from "../store/userSlice";
-import { plusCount } from "../store/cartDataSlice";
+import { plusCount, deleteOrder } from "../store/cartDataSlice";
 
 const CartPage = () => {
   const state = useSelector((state) => {
     return state;
   });
   const dispatch = useDispatch();
+  console.log(state);
 
   return (
     <div>
@@ -26,7 +27,8 @@ const CartPage = () => {
             <th>#</th>
             <th>상품명</th>
             <th>수량</th>
-            <th>변경하기</th>
+            <th>수량 추가</th>
+            <th>상품 빼기</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +45,16 @@ const CartPage = () => {
                     }}
                   >
                     +
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      console.log("data.id = ", typeof data.id);
+                      dispatch(deleteOrder(data.id));
+                    }}
+                  >
+                    X
                   </button>
                 </td>
               </tr>

@@ -9,10 +9,16 @@ import DetailPage from "./pages/DetailPage";
 import EventPage from "./pages/EventPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/CartPage";
+import { useEffect } from "react";
+import RecentVisit from "./components/Recent";
 
 function App() {
   const [shoes, setShoes] = useState(shoesData);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    sessionStorage.setItem("watched", JSON.stringify([]));
+  }, []);
 
   return (
     <div className="App">
@@ -26,7 +32,7 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-
+      <RecentVisit />
       <Routes>
         <Route
           path="/"

@@ -10,9 +10,24 @@ const cartData = createSlice({
     plusCount(state, idx) {
       state.find((el) => el.id === idx.payload).count++;
     },
+    addOrder(state, oj) {
+      const newOrder = state.find((el) => el.id === oj.payload.id);
+      if (newOrder) {
+        newOrder.count++;
+      } else {
+        state.push({
+          id: oj.payload.id,
+          name: oj.payload.title,
+          count: 1,
+        });
+      }
+    },
+    deleteOrder(state, action) {
+      return state.filter((el) => el.id !== action.payload);
+    },
   },
 });
 
-export const { plusCount } = cartData.actions;
+export const { plusCount, addOrder, deleteOrder } = cartData.actions;
 
 export default cartData;

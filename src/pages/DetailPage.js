@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import DetailTabs from "../components/DetailTabs";
+import { addOrder } from "../store/cartDataSlice";
+import { useDispatch } from "react-redux";
 
 const DetailPage = ({ shoes }) => {
   const { id } = useParams();
@@ -11,6 +13,7 @@ const DetailPage = ({ shoes }) => {
   const [nums, setNums] = useState("");
   const [viClass, setViClass] = useState("");
   const shoe = shoes.find((el) => el.id === parseInt(id));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setViClass("vi-end");
@@ -59,7 +62,12 @@ const DetailPage = ({ shoes }) => {
           <h4 className="pt-5">{shoe.title}</h4>
           <p>{shoe.content}</p>
           <p>{shoe.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => dispatch(addOrder(shoe))}
+          >
+            주문하기
+          </button>
         </div>
       </div>
       <DetailTabs shoes={shoes} />
