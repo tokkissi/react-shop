@@ -10,21 +10,22 @@ import EventPage from "./pages/EventPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/CartPage";
 import { useEffect } from "react";
-import RecentVisit from "./components/RecentVisit";
-import { useSelector } from "react-redux";
 
 function App() {
   const [shoes, setShoes] = useState(shoesData);
   let navigate = useNavigate();
-  const recentVisit = useSelector((state) => state.recentVisit);
 
   useEffect(() => {
-    if (sessionStorage.length === 0) {
+    let hasWatched = false;
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key === "watched") {
+        hasWatched = true;
+        break;
+      }
+    }
+    if (!hasWatched) {
       sessionStorage.setItem("watched", JSON.stringify([]));
-    } else {
-      sessionStorage.clear();
-      console.log(recentVisit);
-      sessionStorage.setItem("watched", JSON.stringify(recentVisit));
     }
   }, []);
 
@@ -34,13 +35,13 @@ function App() {
         <Container>
           <Navbar.Brand onClick={() => navigate("/")}>토끼상점</Navbar.Brand>
           <Nav className="me-auto">
-            {/* <Nav.Link onClick={() => navigate("/detail")}>Detail</Nav.Link> */}
+            {/* <Nav.Link onClick={() => navigate("/detail")}>Detai  l</Nav.Link> */}
             <Nav.Link onClick={() => navigate("/cart")}>장바구니</Nav.Link>
             <Nav.Link>마이페이지</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <RecentVisit recentVisit={recentVisit} />
+
       <Routes>
         <Route
           path="/"

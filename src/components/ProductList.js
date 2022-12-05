@@ -4,13 +4,17 @@ import heroImg from "../img/ikm-water.jpg";
 import ProductBox from "./ProductBox";
 import axios from "axios";
 import shoeData from "../data";
+import RecentVisit from "./RecentVisit";
+import { useSelector } from "react-redux";
 
 const ProductList = ({ shoes, setShoes }) => {
   let callCnt = useRef(0);
   const [loading, setLoading] = useState(false);
+  const recentVisit = useSelector((state) => state.recentVisit);
 
   useEffect(() => {
     setShoes(shoeData);
+    sessionStorage.setItem("watched", JSON.stringify(recentVisit));
   }, []);
   return (
     <div>
@@ -18,6 +22,7 @@ const ProductList = ({ shoes, setShoes }) => {
         className="main-bg"
         style={{ backgroundImage: `url(${heroImg})` }}
       ></div>
+      <RecentVisit recentVisit={recentVisit} />
       <div className="container">
         <div className="row">
           {callCnt === 0

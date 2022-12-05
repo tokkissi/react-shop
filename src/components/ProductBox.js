@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateRecentVisit } from "../store/recentVisitSlice";
 import { useEffect } from "react";
 
 const ProductBox = ({ shoe, id }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  let buttonClick = false;
+  const [buttonClick, setButtonClick] = useState(false);
 
   const shoeOj = {
     type: "recent",
@@ -19,19 +19,23 @@ const ProductBox = ({ shoe, id }) => {
   };
 
   useEffect(() => {
-    buttonClick = true;
     if (buttonClick) {
       console.log("클릭됨");
+      console.log(buttonClick);
       dispatch(updateRecentVisit(shoeOj));
-      // navigate(`/detail/${id}`);
+      navigate(`/detail/${id}`);
+      console.log("감지됨");
+      console.log(shoeOj);
     }
-  }, []);
+  }, [buttonClick]);
 
   return (
     <Col
       sm
       onClick={() => {
-        buttonClick = true;
+        console.log("딸깍");
+        setButtonClick(true);
+        console.log(buttonClick);
       }}
     >
       <img
