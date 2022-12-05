@@ -25,7 +25,7 @@ const ProductList = ({ shoes, setShoes }) => {
             : shoes.map((a, i) => {
                 return (
                   <ProductBox
-                    shoes={shoes[i]}
+                    shoe={shoes[i]}
                     id={shoes[i].id}
                     key={shoes[i].id}
                   />

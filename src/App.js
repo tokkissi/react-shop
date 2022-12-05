@@ -10,14 +10,22 @@ import EventPage from "./pages/EventPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/CartPage";
 import { useEffect } from "react";
-import RecentVisit from "./components/Recent";
+import RecentVisit from "./components/RecentVisit";
+import { useSelector } from "react-redux";
 
 function App() {
   const [shoes, setShoes] = useState(shoesData);
   let navigate = useNavigate();
+  const recentVisit = useSelector((state) => state.recentVisit);
 
   useEffect(() => {
-    sessionStorage.setItem("watched", JSON.stringify([]));
+    if (sessionStorage.length === 0) {
+      sessionStorage.setItem("watched", JSON.stringify([]));
+    } else {
+      sessionStorage.clear();
+      console.log(recentVisit);
+      sessionStorage.setItem("watched", JSON.stringify(recentVisit));
+    }
   }, []);
 
   return (
@@ -32,7 +40,7 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-      <RecentVisit />
+      <RecentVisit recentVisit={recentVisit} />
       <Routes>
         <Route
           path="/"

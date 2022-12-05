@@ -5,15 +5,17 @@ const recentVisit = createSlice({
   initialState: [],
   reducers: {
     updateRecentVisit(state, action) {
-      const newState = state.filter(
-        (el) => JSON.stringify(el) !== JSON.stringify(action.payload)
-      );
-      if (state.length < 3) {
-        // 같은 요소 찾기로 필터된 것이 없다면, 원본과 요소 수가 같다
-        if (newState.length === state.length) {
-          state.shift();
-          state.push(action.payload);
-        }
+      // 객체로 가져옴 {id: any, name: any, price: any}
+      // 가져온 객체를 state 에서 findIndex 해서 -1이 아니면, 해당 인덱스를 splice(idx,1)로 삭제
+      // 해당 객체를 state에 push
+      // state.length > 3 이면 shift
+      const finded = state.findIndex((el) => el.id === action.payload.id);
+      if (finded !== -1) {
+        state.splice(finded, 1);
+      }
+      state.push(action.payload);
+      if (state.length > 3) {
+        state.shift();
       }
     },
   },
