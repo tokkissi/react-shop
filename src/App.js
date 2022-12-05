@@ -10,10 +10,26 @@ import EventPage from "./pages/EventPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/CartPage";
 import { useEffect } from "react";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 function App() {
   const [shoes, setShoes] = useState(shoesData);
   let navigate = useNavigate();
+
+  let fetchedUser = useQuery(
+    "tok",
+    () => {
+      return axios
+        .get("https://codingapple1.github.io/userdata.json")
+        .then((res) => {
+          console.log("axios 요청!");
+          return res.data;
+        });
+    },
+    { staleTime: 5000 }
+  );
+  console.log(fetchedUser);
 
   useEffect(() => {
     let hasWatched = false;
@@ -38,6 +54,11 @@ function App() {
             {/* <Nav.Link onClick={() => navigate("/detail")}>Detai  l</Nav.Link> */}
             <Nav.Link onClick={() => navigate("/cart")}>장바구니</Nav.Link>
             <Nav.Link>마이페이지</Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            {fetchedUser.isLoading && "로딩중"}
+            {fetchedUser.error && "에러남"}
+            {fetchedUser.data && fetchedUser.data.name}
           </Nav>
         </Container>
       </Navbar>
