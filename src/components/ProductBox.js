@@ -20,12 +20,8 @@ const ProductBox = ({ shoe, id }) => {
 
   useEffect(() => {
     if (buttonClick) {
-      console.log("클릭됨");
-      console.log(buttonClick);
       dispatch(updateRecentVisit(shoeOj));
       navigate(`/detail/${id}`);
-      console.log("감지됨");
-      console.log(shoeOj);
     }
   }, [buttonClick]);
 
@@ -33,9 +29,7 @@ const ProductBox = ({ shoe, id }) => {
     <Col
       sm
       onClick={() => {
-        console.log("딸깍");
         setButtonClick(true);
-        console.log(buttonClick);
       }}
     >
       <img

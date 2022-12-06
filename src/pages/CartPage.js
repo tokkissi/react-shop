@@ -1,18 +1,27 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { plusAge } from "../store/userSlice";
 import { plusCount, deleteOrder } from "../store/cartDataSlice";
+
+const Child = memo(() => {
+  console.log("재랜더링");
+  return <div>메모 재랜더링 확인용</div>;
+});
+
+Child.displayName = "Child";
 
 const CartPage = () => {
   const state = useSelector((state) => {
     return state;
   });
   const dispatch = useDispatch();
-  console.log(state);
+  const [cnt, setCnt] = useState(0);
 
   return (
     <div>
+      <Child></Child>
+      <button onClick={() => setCnt(cnt + 1)}>+</button>
       <h4>{`${state.tokki.name} ${state.tokki.age}살 의 장바구니`}</h4>
       <button
         onClick={() => {
@@ -50,7 +59,6 @@ const CartPage = () => {
                 <td>
                   <button
                     onClick={() => {
-                      console.log("data.id = ", typeof data.id);
                       dispatch(deleteOrder(data.id));
                     }}
                   >

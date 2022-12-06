@@ -1,14 +1,17 @@
 import "./App.css";
 import "./tailwind.css";
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import shoesData from "./data";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./components/ProductList";
-import DetailPage from "./pages/DetailPage";
+// import DetailPage from "./pages/DetailPage";
+const DetailPage = lazy(() => import("./pages/DetailPage"));
 import EventPage from "./pages/EventPage";
-import NotFoundPage from "./pages/NotFoundPage";
+// import NotFoundPage from "./pages/NotFoundPage";
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 import CartPage from "./pages/CartPage";
+// const CartPage = lazy(() => import("./pages/CartPage"));
 import { useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -23,13 +26,11 @@ function App() {
       return axios
         .get("https://codingapple1.github.io/userdata.json")
         .then((res) => {
-          console.log("axios 요청!");
           return res.data;
         });
     },
     { staleTime: 5000 }
   );
-  console.log(fetchedUser);
 
   useEffect(() => {
     let hasWatched = false;
@@ -63,19 +64,21 @@ function App() {
         </Container>
       </Navbar>
 
-      <Routes>
-        <Route
-          path="/"
-          element={<ProductList shoes={shoes} setShoes={setShoes} />}
-        />
-        <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
-        <Route path="/event" element={<EventPage />}>
-          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
-          <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
-        </Route>
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<div>로딩중입니당</div>}>
+        <Routes>
+          <Route
+            path="/"
+            element={<ProductList shoes={shoes} setShoes={setShoes} />}
+          />
+          <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
+          <Route path="/event" element={<EventPage />}>
+            <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
+            <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
+          </Route>
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
